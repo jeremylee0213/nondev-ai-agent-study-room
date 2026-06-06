@@ -583,17 +583,6 @@
     </aside>
 
     <main id="main" class="workspace">
-      <div class="topbar no-print" aria-label="상단 도구">
-        <label class="search" for="dashboardSearch">
-          <span aria-hidden="true">⌕</span>
-          <input id="dashboardSearch" type="search" placeholder="용어 검색: LLM, API, 토큰, OAuth, Docker" />
-        </label>
-        <div class="actions">
-          <button class="btn" type="button" id="printBtn">인쇄</button>
-          <button class="btn primary" type="button" id="downloadBtn">HTML 저장</button>
-        </div>
-      </div>
-
       <section id="top" class="hero">
         <article class="card hero-main">
           <div>
@@ -739,31 +728,7 @@
 
   <script>
     (function () {
-      const printBtn = document.getElementById('printBtn');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const searchInput = document.getElementById('dashboardSearch');
-      const terms = Array.from(document.querySelectorAll('[data-term]'));
-
-      printBtn?.addEventListener('click', () => window.print());
-      downloadBtn?.addEventListener('click', () => {
-        const html = '<!doctype html>\n' + document.documentElement.outerHTML;
-        const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'agent-study-dashboard.html';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      });
-      searchInput?.addEventListener('input', () => {
-        const query = searchInput.value.trim().toLowerCase();
-        terms.forEach((term) => {
-          const text = (term.innerText + ' ' + term.dataset.term).toLowerCase();
-          term.style.display = !query || text.includes(query) ? '' : 'none';
-        });
-      });
+      document.documentElement.classList.add('ready');
     })();
   </script>
 </body>
