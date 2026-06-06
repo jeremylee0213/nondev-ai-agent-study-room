@@ -34,7 +34,7 @@ else
 fi
 
 COPYFILE_DISABLE=1 tar --disable-copyfile --format ustar -czf - \
-  index.html agent_study_webpage_white.html README.md .nojekyll \
+  index.html agent_study_webpage_white.html README.md SITE_VERSION .nojekyll \
   assets/hermes-telegram-flow.jpg assets/hermes-openclaw-overview.jpg \
   | "${SSH_BASE[@]}" "${NAS_USER}@${NAS_HOST}" "set -e; mkdir -p '$NAS_WEB_PATH'; tar -xzf - -C '$NAS_WEB_PATH'; cp '$NAS_WEB_PATH/index.html' /volume1/web/agent.html; rm -f '$NAS_WEB_PATH'/._*"
 

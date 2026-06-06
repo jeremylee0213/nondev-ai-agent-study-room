@@ -66,18 +66,27 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
+      font-size: clamp(24px, 3vw, 42px);
+      font-weight: 900;
+      letter-spacing: -0.06em;
     }
     .brand-mark {
-      width: 34px;
-      height: 34px;
+      width: 42px;
+      height: 42px;
       display: grid;
       place-items: center;
-      border-radius: 12px;
+      border-radius: 14px;
       color: #fff;
       background: linear-gradient(135deg, #0071e3, #5ac8fa);
       box-shadow: 0 12px 28px rgba(0, 113, 227, .22);
+      font-size: 18px;
+      letter-spacing: -0.04em;
+    }
+    .brand-sub {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
     .nav-links {
       display: flex;
@@ -154,10 +163,10 @@
     }
     h1, h2, h3, p { margin: 0; }
     h1 {
-      max-width: 900px;
-      font-size: clamp(46px, 8vw, 94px);
-      line-height: .98;
-      letter-spacing: -0.07em;
+      max-width: 1040px;
+      font-size: clamp(58px, 9.2vw, 128px);
+      line-height: .92;
+      letter-spacing: -0.085em;
     }
     h2 {
       max-width: 860px;
@@ -183,6 +192,29 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+    }
+    .cover-logo {
+      font-size: clamp(56px, 8vw, 112px);
+      font-weight: 950;
+      line-height: .9;
+      letter-spacing: -0.095em;
+    }
+    .version-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: #424245;
+      font-weight: 800;
+    }
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid rgba(0, 113, 227, .16);
+      border-radius: 999px;
+      background: rgba(234, 243, 255, .82);
+      color: var(--blue);
     }
     .pill-row {
       display: flex;
@@ -353,6 +385,7 @@
       .nav-links { display: none; }
       .news-card { padding: 22px; border-radius: 28px; }
       h1 { font-size: clamp(42px, 13vw, 62px); }
+      .cover-logo { font-size: clamp(48px, 14vw, 68px); }
       .term-grid { grid-template-columns: 1fr; }
     }
     @media print {
@@ -370,7 +403,8 @@
   <header class="top-nav" aria-label="카드뉴스 메뉴">
     <a class="brand" href="#cover">
       <span class="brand-mark">AI</span>
-      <span>비전공자 AI 에이전트 공부방</span>
+      <span>AI Hub OS</span>
+      <span class="brand-sub">비전공자 AI 에이전트 공부방</span>
     </a>
     <nav class="nav-links">
       <a href="#telegram">Telegram</a>
@@ -386,6 +420,11 @@
       <section id="cover" class="news-card">
         <div class="card-inner">
           <span class="eyebrow">Card News 01</span>
+          <div class="cover-logo">AI Hub OS</div>
+          <div class="version-row" aria-label="업데이트 정보">
+            <span class="version-badge">V1.0</span>
+            <span class="version-badge">Updated 2026.06.06</span>
+          </div>
           <h1>AI 에이전트를<br><span class="gradient-text">처음 만나는 날</span></h1>
           <p class="lead">챗봇처럼 대화만 하는 AI가 아니라, 텔레그램·파일·웹·API와 연결되어 실제 일을 처리하는 구조를 봅니다.</p>
           <div class="pill-row" aria-label="핵심 키워드">
