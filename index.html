@@ -586,7 +586,7 @@
       <div class="topbar no-print" aria-label="상단 도구">
         <label class="search" for="dashboardSearch">
           <span aria-hidden="true">⌕</span>
-          <input id="dashboardSearch" type="search" placeholder="용어 검색: MCP, Docker, API 키, 권한" />
+          <input id="dashboardSearch" type="search" placeholder="용어 검색: LLM, API, 토큰, OAuth, Docker" />
         </label>
         <div class="actions">
           <button class="btn" type="button" id="printBtn">인쇄</button>
@@ -681,16 +681,34 @@
           <div>
             <div class="kicker">Glossary</div>
             <h2 id="terms-title">용어를 업무 언어로 바꾸기</h2>
-            <p class="section-desc">처음 듣는 말은 뜻보다 “어디에 쓰이는지”부터 잡습니다.</p>
+            <p class="section-desc">설치와 실제 사용 중 자주 만나는 말입니다. 뜻보다 “어디서 쓰이고 무엇을 조심해야 하는지”부터 잡습니다.</p>
           </div>
         </div>
         <ul class="plain-list" id="termGrid">
-          <li data-term="ai llm 모델 두뇌"><b>LLM</b> 글을 읽고 답하는 AI 두뇌입니다.</li>
-          <li data-term="prompt 프롬프트 지시"><b>프롬프트</b> AI에게 주는 업무지시서입니다.</li>
-          <li data-term="agent 에이전트 작업자"><b>에이전트</b> 목표를 받고 도구를 써서 일을 처리하는 AI 작업자입니다.</li>
-          <li data-term="mcp tool 도구 호출"><b>도구 / MCP</b> AI가 파일, 브라우저, GitHub 같은 외부 기능을 쓰는 연결 방식입니다.</li>
-          <li data-term="api key 키 보안"><b>API 키</b> 내 계정으로 AI 서비스를 쓰게 해주는 비밀번호 같은 값입니다.</li>
-          <li data-term="docker sandbox 권한"><b>Docker / 샌드박스</b> 실습 환경을 독립된 상자에 넣어 사고를 줄이는 장치입니다.</li>
+          <li data-term="ai llm 모델 두뇌 model"><b>LLM</b> 글을 읽고 답하는 AI 두뇌입니다. GPT, Claude, Gemini 같은 모델이 여기에 들어갑니다.</li>
+          <li data-term="model 모델 gpt claude gemini"><b>모델</b> AI 두뇌의 제품명입니다. 작업 성격에 따라 빠른 모델, 똑똑한 모델, 저렴한 모델을 고릅니다.</li>
+          <li data-term="prompt 프롬프트 지시 instruction"><b>프롬프트</b> AI에게 주는 업무지시서입니다. 목표, 조건, 금지사항, 결과 형식을 같이 적으면 좋습니다.</li>
+          <li data-term="agent 에이전트 작업자 자동화"><b>에이전트</b> 목표를 받고 계획을 세운 뒤 도구를 써서 일을 처리하는 AI 작업자입니다.</li>
+          <li data-term="api application programming interface 연결 통로"><b>API</b> 서비스끼리 대화하는 공식 통로입니다. 에이전트가 OpenAI, Telegram, GitHub 같은 서비스와 연결될 때 씁니다.</li>
+          <li data-term="api key 키 보안 secret"><b>API 키</b> 내 계정으로 서비스를 쓰게 해주는 비밀번호 같은 값입니다. 공개 저장소, 화면 공유, 단체방에 올리면 안 됩니다.</li>
+          <li data-term="token 토큰 bot token access token refresh token"><b>토큰</b> 로그인 권한을 증명하는 임시 출입증입니다. Telegram Bot Token, Access Token, Refresh Token처럼 이름이 붙습니다.</li>
+          <li data-term="oauth 인증 로그인 권한 authorize callback"><b>OAuth 인증</b> 비밀번호를 직접 주지 않고 “이 앱에 이 권한만 허용”하는 로그인 방식입니다. Cloudflare, Google, GitHub 연동에서 자주 봅니다.</li>
+          <li data-term="permission 권한 scope read write admin"><b>권한 / Scope</b> 앱이 할 수 있는 일의 범위입니다. 읽기, 쓰기, 관리자 권한을 구분해서 최소한만 열어야 합니다.</li>
+          <li data-term="tool mcp 도구 호출 function"><b>Tool / MCP</b> AI가 파일, 브라우저, GitHub, DB 같은 외부 기능을 호출하는 방식입니다. 에이전트의 손발에 해당합니다.</li>
+          <li data-term="telegram bot bot token mention dm"><b>Telegram Bot</b> 텔레그램 메시지를 받아 에이전트로 전달하는 입구입니다. Bot Token을 연결해야 동작합니다.</li>
+          <li data-term="gateway 라우팅 route session 권한"><b>Gateway</b> 들어온 메시지를 어느 에이전트에게 보낼지 정하는 중간 관문입니다. 세션, 권한, 라우팅을 관리합니다.</li>
+          <li data-term="webhook callback url event"><b>Webhook</b> 어떤 일이 생기면 정해진 주소로 자동 알림을 보내는 방식입니다. 메신저나 결제, GitHub 알림 연동에서 자주 나옵니다.</li>
+          <li data-term="endpoint url 주소 api server"><b>Endpoint</b> API가 기다리는 정확한 주소입니다. 예를 들어 로그인 콜백 주소나 메시지 수신 주소가 여기에 해당합니다.</li>
+          <li data-term="docker sandbox container 컨테이너 권한"><b>Docker / 컨테이너</b> 프로그램을 독립된 상자 안에서 실행하는 방식입니다. 설치 충돌과 실수 피해를 줄입니다.</li>
+          <li data-term="env environment variable 환경변수 secret"><b>환경변수 / .env</b> API 키, 토큰, 서버 주소처럼 코드에 직접 쓰면 위험한 값을 따로 보관하는 설정 파일입니다.</li>
+          <li data-term="cli terminal command 터미널 명령어"><b>CLI / 터미널</b> 버튼 대신 글자로 명령을 입력하는 도구입니다. 설치, 실행, 로그 확인에 자주 씁니다.</li>
+          <li data-term="log 로그 error debug"><b>로그</b> 프로그램이 남기는 작업 기록입니다. 안 될 때 원인을 찾는 첫 번째 단서입니다.</li>
+          <li data-term="session 세션 대화 연결 상태"><b>세션</b> 한 번 이어진 대화나 작업의 상태입니다. 같은 사용자인지, 이전 대화를 기억할지 판단할 때 씁니다.</li>
+          <li data-term="memory 메모리 기억 persona"><b>메모리</b> 에이전트가 이전 대화, 사용자 취향, 작업 규칙을 기억하는 공간입니다. 잘못된 기억이 쌓이면 답도 흔들릴 수 있습니다.</li>
+          <li data-term="skill 스킬 기능 workflow"><b>스킬</b> 에이전트에게 추가하는 작업 능력입니다. 예를 들어 GitHub 배포, 이미지 생성, 문서 정리 같은 기능입니다.</li>
+          <li data-term="rate limit quota 사용량 제한"><b>Rate Limit / 사용량 제한</b> 너무 많이 호출하면 잠시 막히는 제한입니다. 무료 계정이나 API 테스트에서 자주 만납니다.</li>
+          <li data-term="repository repo github 저장소 public private"><b>Repository / Repo</b> GitHub에서 코드와 파일을 보관하는 저장소입니다. Public이면 누구나 볼 수 있습니다.</li>
+          <li data-term="deploy 배포 nas github pages cloudflare"><b>배포</b> 내 컴퓨터의 파일을 NAS, GitHub Pages, Cloudflare 같은 외부 주소에서 볼 수 있게 올리는 작업입니다.</li>
         </ul>
       </section>
 
