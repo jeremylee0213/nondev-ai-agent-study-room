@@ -3,50 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>비전공자 AI 에이전트 공부방 | Dashboard</title>
-  <meta name="description" content="비전공자를 위한 AI 에이전트 학습 자료. Apple 스타일 화면에 Hermes, Telegram, OpenClaw 설명 이미지를 크게 배치했습니다." />
+  <title>비전공자 AI 에이전트 공부방</title>
+  <meta name="description" content="비전공자를 위한 AI 에이전트 카드뉴스. Hermes, Telegram, OpenClaw, 설치 용어를 Apple 글라스 스타일로 정리했습니다." />
   <style>
     :root {
       --bg: #f5f5f7;
-      --surface: #ffffff;
-      --surface-2: #fbfbfd;
-      --text: #1d1d1f;
+      --ink: #1d1d1f;
       --muted: #6e6e73;
-      --line: rgba(0, 0, 0, .08);
-      --line-strong: rgba(0, 0, 0, .16);
+      --line: rgba(0, 0, 0, .10);
+      --glass: rgba(255, 255, 255, .72);
+      --glass-strong: rgba(255, 255, 255, .88);
       --blue: #0071e3;
-      --blue-soft: #eaf3ff;
       --green: #34c759;
-      --green-soft: #eaf8ef;
       --red: #ff3b30;
-      --red-soft: #fff0ef;
-      --yellow: #ffd60a;
-      --yellow-soft: #fff8d6;
-      --shadow: 0 18px 52px rgba(0, 0, 0, .08);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
+      --shadow: 0 28px 80px rgba(0, 0, 0, .10);
       --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Segoe UI", system-ui, sans-serif;
-      --doodle: "Comic Neue", "Comic Sans MS", "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      background: var(--bg);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 8%, rgba(0, 113, 227, .12), transparent 28rem),
+        radial-gradient(circle at 86% 34%, rgba(52, 199, 89, .10), transparent 26rem),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 42%, #ffffff 100%);
       font-family: var(--font);
       word-break: keep-all;
     }
-    a { color: inherit; }
-    button, input { font: inherit; }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+
     .skip-link {
       position: absolute;
       left: 16px;
       top: -80px;
-      z-index: 999;
+      z-index: 100;
       padding: 10px 14px;
       border-radius: 999px;
       background: var(--blue);
@@ -54,682 +48,457 @@
     }
     .skip-link:focus { top: 14px; }
 
-    .app-shell {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 250px minmax(0, 1fr);
-      gap: 18px;
-      padding: 18px;
-    }
-
-    .sidebar, .topbar, .card {
-      background: rgba(255,255,255,.86);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-    .sidebar {
+    .top-nav {
       position: sticky;
-      top: 18px;
-      height: calc(100vh - 36px);
-      border-radius: var(--radius-xl);
-      padding: 18px;
+      top: 0;
+      z-index: 20;
       display: flex;
-      flex-direction: column;
-      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px clamp(16px, 4vw, 42px);
+      border-bottom: 1px solid rgba(255, 255, 255, .7);
+      background: rgba(255, 255, 255, .58);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
     }
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #0071e3, #5ac8fa);
-      color: #fff;
-      box-shadow: 0 12px 30px rgba(0,113,227,.25);
-      font-weight: 900;
-    }
-    .sidebar small {
-      color: var(--muted);
-      line-height: 1.45;
-    }
-    .menu-label {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-    }
-    .nav-menu {
-      display: grid;
-      gap: 8px;
-    }
-    .nav-link {
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 12px;
-      border-radius: 14px;
-      text-decoration: none;
-      color: #2b2b2f;
-      transition: background .18s ease, color .18s ease;
-    }
-    .nav-link:hover, .nav-link.active {
-      background: var(--blue-soft);
-      color: #004c9f;
-    }
-    .nav-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: #f5f5f7;
-      color: var(--blue);
-      font-size: 12px;
-      font-weight: 900;
-      flex: 0 0 auto;
-    }
-    .sidebar-foot {
-      margin-top: auto;
-      padding: 14px;
-      border-radius: 18px;
-      background: #f5f5f7;
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 13px;
-    }
-
-    .workspace {
-      min-width: 0;
-      display: grid;
-      gap: 18px;
-    }
-    .topbar {
-      position: sticky;
-      top: 18px;
-      z-index: 50;
-      min-height: 64px;
-      border-radius: 22px;
-      padding: 12px 14px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: center;
-    }
-    .search {
-      height: 42px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #fff;
-      color: var(--muted);
-    }
-    .search input {
-      width: 100%;
-      border: 0;
-      outline: 0;
-      color: var(--text);
-      background: transparent;
-    }
-    .actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .btn {
-      min-height: 42px;
-      padding: 0 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #fff;
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-    }
-    .btn.primary {
-      border-color: var(--blue);
-      background: var(--blue);
-      color: #fff;
-    }
-
-    .hero {
-      display: block;
-    }
-    .card {
-      border-radius: var(--radius-xl);
-      padding: 22px;
-    }
-    .hero-main {
-      min-height: 300px;
-      display: grid;
-      align-content: space-between;
-      background:
-        radial-gradient(circle at 85% 12%, rgba(0,113,227,.12), transparent 28rem),
-        linear-gradient(180deg, #fff, #fbfbfd);
-    }
-    .eyebrows {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-    .chip {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 7px 11px;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: #fff;
+      background: linear-gradient(135deg, #0071e3, #5ac8fa);
+      box-shadow: 0 12px 28px rgba(0, 113, 227, .22);
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .nav-links a {
+      min-height: 36px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      background: #f5f5f7;
+      background: rgba(255, 255, 255, .6);
       color: #424245;
       font-size: 13px;
       font-weight: 700;
     }
-    .chip.blue { background: var(--blue-soft); color: #005bb5; }
-    .chip.green { background: var(--green-soft); color: #147a32; }
-    .chip.red { background: var(--red-soft); color: #b42318; }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 {
-      max-width: 820px;
-      margin-bottom: 16px;
-      font-size: clamp(44px, 6vw, 84px);
-      line-height: .98;
-      letter-spacing: -0.075em;
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
     }
+    .deck {
+      display: grid;
+      gap: 22px;
+      scroll-snap-type: y proximity;
+    }
+    .news-card {
+      position: relative;
+      overflow: hidden;
+      min-height: min(820px, calc(100vh - 112px));
+      display: grid;
+      align-content: center;
+      gap: 28px;
+      padding: clamp(24px, 5vw, 56px);
+      border: 1px solid rgba(255, 255, 255, .8);
+      border-radius: clamp(28px, 4vw, 46px);
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      scroll-snap-align: start;
+    }
+    .news-card.compact { min-height: auto; }
+    .news-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(255,255,255,.8), transparent 46%);
+    }
+    .card-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 22px;
+    }
+    .eyebrow {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .72);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      max-width: 900px;
+      font-size: clamp(46px, 8vw, 94px);
+      line-height: .98;
+      letter-spacing: -0.07em;
+    }
+    h2 {
+      max-width: 860px;
+      font-size: clamp(34px, 5.4vw, 68px);
+      line-height: 1.04;
+      letter-spacing: -0.065em;
+    }
+    h3 {
+      font-size: clamp(21px, 2.2vw, 30px);
+      line-height: 1.18;
+      letter-spacing: -0.04em;
+    }
+    .lead {
+      max-width: 780px;
+      color: #424245;
+      font-size: clamp(18px, 2.1vw, 26px);
+      line-height: 1.55;
+      letter-spacing: -0.025em;
+    }
+    .muted { color: var(--muted); }
     .gradient-text {
-      background: linear-gradient(110deg, #0071e3, #5856d6 48%, #ff3b30);
+      background: linear-gradient(110deg, #0071e3, #5856d6 52%, #ff3b30);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    .hero-subtitle {
-      max-width: 760px;
-      color: #424245;
-      font-size: clamp(18px, 2vw, 24px);
-      line-height: 1.55;
-      letter-spacing: -0.035em;
-    }
-    .section {
-      scroll-margin-top: 100px;
-      display: grid;
-      gap: 14px;
-    }
-    .section-head {
+    .pill-row {
       display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .kicker {
-      margin-bottom: 6px;
-      color: var(--blue);
-      font-size: 12px;
-      font-weight: 850;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-    }
-    h2 {
-      margin-bottom: 0;
-      font-size: clamp(30px, 4vw, 48px);
-      line-height: 1.08;
-      letter-spacing: -0.065em;
-    }
-    .section-desc {
-      max-width: 760px;
-      margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .span-3 { grid-column: span 3; }
-    .span-4 { grid-column: span 4; }
-    .span-5 { grid-column: span 5; }
-    .span-6 { grid-column: span 6; }
-    .span-7 { grid-column: span 7; }
-    .span-8 { grid-column: span 8; }
-    .span-12 { grid-column: 1 / -1; }
-
-    .metric {
-      min-height: 136px;
-      display: grid;
-      align-content: space-between;
-    }
-    .metric small { color: var(--muted); font-weight: 700; }
-    .metric strong {
-      font-size: 34px;
-      letter-spacing: -0.055em;
-    }
-    .metric p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 14px;
-    }
-    .progress-bar {
-      height: 8px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: #ececf0;
-    }
-    .progress-bar span {
-      display: block;
-      height: 100%;
-      width: var(--value, 50%);
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--blue), #5ac8fa);
-    }
-
-    .doodle-card {
-      border: 2.5px solid rgba(17, 24, 39, .38);
-      border-radius: 24px 18px 26px 20px / 20px 26px 18px 24px;
-      background:
-        radial-gradient(circle, rgba(17, 24, 39, .08) 1px, transparent 1.5px),
-        #fffefa;
-      background-size: 28px 28px, auto;
-      box-shadow: 5px 7px 0 rgba(17, 24, 39, .14);
-      font-family: var(--doodle);
-    }
-    .doodle-card h3, .doodle-card b, .doodle-card text {
-      font-family: var(--doodle);
-      letter-spacing: 0;
-    }
-    .doodle-board {
-      overflow-x: auto;
-      padding: 18px;
-    }
-    .doodle-board svg {
-      display: block;
-      width: 100%;
-      min-width: 820px;
-      height: auto;
-    }
-    .doodle-board text { fill: #111827; }
-    .caption {
-      margin-top: 10px;
-      color: var(--muted);
-      font-family: var(--font);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-    .doodle-note {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-      padding: 14px;
-      border: 2px dashed rgba(17,24,39,.22);
-      border-radius: 18px;
-      background: #fff;
-      font-family: var(--font);
-    }
-    .doodle-note b { color: var(--text); }
-    .doodle-note span {
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 14px;
-    }
-    .plain-panel {
-      padding: 4px 2px;
-      max-width: 980px;
-    }
-    .plain-panel p {
-      margin: 0 0 12px;
-      color: #424245;
-      font-size: 18px;
-      line-height: 1.75;
-      letter-spacing: -0.025em;
-    }
-    .plain-list {
-      display: grid;
+      flex-wrap: wrap;
       gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
     }
-    .plain-list li {
-      padding: 0 0 10px;
-      border-bottom: 1px solid var(--line);
-      color: #424245;
-      line-height: 1.65;
-    }
-    .plain-list b {
-      color: var(--text);
-      margin-right: 6px;
-    }
-    .image-frame {
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: #fff;
-    }
-    .image-frame img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-    .image-missing {
-      min-height: 220px;
-      display: grid;
-      place-items: center;
-      padding: 26px;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.6;
-      background: #fbfbfd;
-    }
-
-    .role {
+    .pill {
       display: inline-flex;
-      padding: 5px 9px;
-      border: 2px dashed rgba(17,24,39,.20);
+      align-items: center;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      background: var(--yellow-soft);
-      font-weight: 850;
-      font-size: 13px;
+      background: rgba(255, 255, 255, .64);
+      color: #424245;
+      font-weight: 750;
     }
 
-    .list {
+    .image-card {
+      overflow: hidden;
+      width: min(100%, 880px);
+      margin-inline: auto;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--glass-strong);
+      box-shadow: 0 18px 52px rgba(0,0,0,.08);
+    }
+    #openclaw .image-card {
+      width: min(100%, 620px);
+    }
+    .image-card img {
+      display: block;
+      width: 100%;
+      max-height: 58vh;
+      height: auto;
+      object-fit: contain;
+      background: #fff;
+    }
+    .image-caption {
+      padding: 14px 18px 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .split {
       display: grid;
-      gap: 10px;
+      grid-template-columns: minmax(0, .95fr) minmax(320px, 1.05fr);
+      gap: clamp(20px, 4vw, 44px);
+      align-items: center;
+    }
+    .steps {
+      display: grid;
+      gap: 12px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
-    .list li {
+    .steps li {
       display: grid;
-      grid-template-columns: 30px 1fr;
-      gap: 10px;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
       align-items: start;
-      padding: 12px;
+      padding: 14px;
       border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #fff;
+      border-radius: 20px;
+      background: rgba(255,255,255,.58);
     }
     .num {
-      width: 30px;
-      height: 30px;
+      width: 42px;
+      height: 42px;
       display: grid;
       place-items: center;
-      border-radius: 10px;
-      background: var(--blue-soft);
+      border-radius: 15px;
+      background: #eaf3ff;
       color: var(--blue);
       font-weight: 900;
-      font-size: 13px;
     }
-    .list b { display: block; margin-bottom: 3px; }
-    .list span { color: var(--muted); line-height: 1.45; font-size: 14px; }
+    .steps b { display: block; margin-bottom: 4px; }
+    .steps span { color: var(--muted); line-height: 1.48; }
 
-    .terms {
+    .term-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
     .term {
+      min-height: 128px;
       padding: 16px;
       border: 1px solid var(--line);
-      border-radius: 18px;
-      background: #fff;
+      border-radius: 22px;
+      background: rgba(255,255,255,.58);
     }
-    .term h3 { margin-bottom: 8px; font-size: 19px; }
-    .term p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .term b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+    .term span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .notice {
+      display: grid;
+      gap: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255, 59, 48, .18);
+      border-radius: 24px;
+      background: rgba(255, 240, 239, .62);
+    }
+    .notice b { color: #b42318; }
+    .notice p {
+      color: #424245;
+      line-height: 1.6;
+    }
+
+    .closing {
+      text-align: center;
+      justify-items: center;
+    }
+    .closing .lead { margin-inline: auto; }
 
     .bottom-nav {
       display: none;
       position: sticky;
       bottom: 12px;
-      z-index: 80;
-      margin: 0 12px 12px;
+      z-index: 18;
+      width: min(520px, calc(100% - 24px));
+      margin: 0 auto 12px;
       padding: 8px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: rgba(255,255,255,.9);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 14px 40px rgba(0,0,0,.10);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
     .bottom-nav a {
       flex: 1;
-      min-height: 42px;
+      min-height: 40px;
       display: grid;
       place-items: center;
       border-radius: 999px;
-      text-decoration: none;
       color: var(--muted);
       font-size: 13px;
       font-weight: 800;
     }
-    .bottom-nav a:first-child { background: var(--blue-soft); color: var(--blue); }
-
-    @media (max-width: 1180px) {
-      .app-shell { grid-template-columns: 220px minmax(0, 1fr); }
-      .hero { grid-template-columns: 1fr; }
-      .span-3, .span-4, .span-5, .span-6, .span-7, .span-8 { grid-column: span 6; }
+    .bottom-nav a:first-child {
+      background: #eaf3ff;
+      color: var(--blue);
     }
-    @media (max-width: 820px) {
-      .app-shell {
-        display: block;
-        padding: 12px;
-      }
-      .sidebar {
-        position: static;
-        height: auto;
-        margin-bottom: 12px;
-      }
-      .nav-menu {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .topbar {
-        position: static;
-        grid-template-columns: 1fr;
-        margin-bottom: 12px;
-      }
-      .actions { flex-wrap: wrap; }
-      .workspace { margin-bottom: 12px; }
-      .dashboard-grid { grid-template-columns: 1fr; }
-      .span-3, .span-4, .span-5, .span-6, .span-7, .span-8, .span-12 { grid-column: 1; }
-      h1 { font-size: clamp(44px, 14vw, 68px); }
+
+    @media (max-width: 900px) {
+      .top-nav { align-items: flex-start; flex-direction: column; }
+      .nav-links { justify-content: flex-start; }
+      .news-card { min-height: auto; }
+      .split { grid-template-columns: 1fr; }
+      .term-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .image-card, #openclaw .image-card { width: 100%; }
+      .image-card img { max-height: none; }
       .bottom-nav { display: flex; }
+    }
+    @media (max-width: 620px) {
+      main { width: min(100% - 20px, 1120px); padding-top: 14px; }
+      .top-nav { padding: 12px; }
+      .nav-links { display: none; }
+      .news-card { padding: 22px; border-radius: 28px; }
+      h1 { font-size: clamp(42px, 13vw, 62px); }
+      .term-grid { grid-template-columns: 1fr; }
     }
     @media print {
       body { background: #fff; }
-      .sidebar, .topbar, .bottom-nav, .no-print { display: none !important; }
-      .app-shell { display: block; padding: 0; }
-      .card, .doodle-card { box-shadow: none; break-inside: avoid; }
+      .top-nav, .bottom-nav, .skip-link { display: none !important; }
+      main { width: 100%; padding: 0; }
+      .deck { gap: 18px; }
+      .news-card { box-shadow: none; break-inside: avoid; min-height: auto; }
     }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">본문으로 이동</a>
 
-  <div class="app-shell">
-    <aside class="sidebar" aria-label="학습 메뉴">
-      <a class="brand" href="#top">
-        <span class="brand-mark">AI</span>
-        <span>에이전트<br>공부방 OS</span>
-      </a>
-      <small>비전공자가 AI 에이전트를 “구조 → 도구 → 실습 → 안전” 순서로 이해하는 대시보드입니다.</small>
+  <header class="top-nav" aria-label="카드뉴스 메뉴">
+    <a class="brand" href="#cover">
+      <span class="brand-mark">AI</span>
+      <span>비전공자 AI 에이전트 공부방</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#telegram">Telegram</a>
+      <a href="#openclaw">OpenClaw</a>
+      <a href="#steps">설치 흐름</a>
+      <a href="#terms">용어</a>
+      <a href="#safety">안전</a>
+    </nav>
+  </header>
 
-      <div class="menu-label">메뉴</div>
-      <nav class="nav-menu">
-        <a class="nav-link active" href="#top"><span class="nav-icon">홈</span><span>Dashboard</span></a>
-        <a class="nav-link" href="#flow"><span class="nav-icon">흐</span><span>전체 흐름</span></a>
-        <a class="nav-link" href="#openclaw"><span class="nav-icon">오</span><span>OpenClaw</span></a>
-        <a class="nav-link" href="#roadmap"><span class="nav-icon">실</span><span>실습 로드맵</span></a>
-        <a class="nav-link" href="#tools"><span class="nav-icon">툴</span><span>Hermes/OpenClaw</span></a>
-        <a class="nav-link" href="#terms"><span class="nav-icon">용</span><span>용어</span></a>
-        <a class="nav-link" href="#safety"><span class="nav-icon">안</span><span>안전</span></a>
-      </nav>
-
-      <div class="sidebar-foot">
-        <b>오늘 성공 기준</b><br>
-        설치 성공보다 “모델, 에이전트, 도구, 권한, 기억”의 관계를 말로 설명할 수 있으면 성공입니다.
-      </div>
-    </aside>
-
-    <main id="main" class="workspace">
-      <section id="top" class="hero">
-        <article class="card hero-main">
-          <div>
-            <div class="eyebrows">
-              <span class="chip blue">당근 모임 첫 교육자료</span>
-              <span class="chip green">대시보드형</span>
-              <span class="chip red">비전공자용</span>
-            </div>
-            <h1>AI 에이전트를<br><span class="gradient-text">처음 만나는 날</span></h1>
-            <p class="hero-subtitle">똑똑한 챗봇을 넘어, AI가 도구를 연결하고 순서대로 일을 처리하는 전체 그림을 한 화면에서 이해합니다.</p>
+  <main id="main">
+    <div class="deck">
+      <section id="cover" class="news-card">
+        <div class="card-inner">
+          <span class="eyebrow">Card News 01</span>
+          <h1>AI 에이전트를<br><span class="gradient-text">처음 만나는 날</span></h1>
+          <p class="lead">챗봇처럼 대화만 하는 AI가 아니라, 텔레그램·파일·웹·API와 연결되어 실제 일을 처리하는 구조를 봅니다.</p>
+          <div class="pill-row" aria-label="핵심 키워드">
+            <span class="pill">Hermes Agent</span>
+            <span class="pill">Telegram Bot</span>
+            <span class="pill">OpenClaw</span>
+            <span class="pill">OAuth</span>
+            <span class="pill">API Token</span>
           </div>
-          <div class="actions">
-            <a class="btn primary" href="#flow">전체 흐름 보기</a>
-            <a class="btn" href="#tools">Hermes/OpenClaw</a>
-            <a class="btn" href="#safety">안전 체크</a>
-          </div>
-        </article>
-
-      </section>
-
-      <section id="flow" class="section" aria-labelledby="flow-title">
-        <div class="section-head">
-          <div>
-            <div class="kicker">Big Picture</div>
-            <h2 id="flow-title">Hermes Agent + Telegram 연결 모식도</h2>
-            <p class="section-desc">텔레그램에서 멘션하면 Bot이 메시지를 받고, Gateway가 라우팅한 뒤 Hermes Agent가 도구를 써서 답합니다.</p>
-          </div>
-        </div>
-
-        <div class="image-frame">
-          <img src="assets/hermes-telegram-flow.jpg" alt="Hermes Agent와 Telegram 연결 모식도" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
-          <div class="image-missing" hidden>원본 이미지 파일을 <b>assets/hermes-telegram-flow.jpg</b>로 넣으면 이 자리에 그대로 표시됩니다.</div>
         </div>
       </section>
 
-      <section id="openclaw" class="section" aria-labelledby="openclaw-title">
-        <div class="section-head">
-          <div>
-            <div class="kicker">OpenClaw</div>
-            <h2 id="openclaw-title">헤르메스 오픈클로란 무엇인가?</h2>
-            <p class="section-desc">누구나 만들고 쓸 수 있는 AI 에이전트 플랫폼이라는 설명 이미지를 그대로 배치합니다.</p>
-          </div>
-        </div>
-        <div class="image-frame">
-          <img src="assets/hermes-openclaw-overview.jpg" alt="헤르메스 오픈클로 설명 인포그래픽" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
-          <div class="image-missing" hidden>원본 이미지 파일을 <b>assets/hermes-openclaw-overview.jpg</b>로 넣으면 이 자리에 그대로 표시됩니다.</div>
+      <section id="telegram" class="news-card">
+        <div class="card-inner">
+          <span class="eyebrow">Card News 02</span>
+          <h2>텔레그램에서 부르면<br>에이전트가 도구를 써서 답합니다</h2>
+          <p class="lead">사용자 메시지 → Telegram Bot → Hermes Gateway → Hermes Agent Core → 도구 실행 → 답변 전달 순서입니다.</p>
+          <figure class="image-card">
+            <img src="assets/hermes-telegram-flow.jpg" alt="Hermes Agent와 Telegram 연결 모식도">
+            <figcaption class="image-caption">멘션 기반 응답, 파일/이미지/음성 전달, 웹 검색, 코드 실행, 외부 API 호출까지 한 그림으로 설명합니다.</figcaption>
+          </figure>
         </div>
       </section>
 
-      <section id="roadmap" class="section" aria-labelledby="roadmap-title">
-        <div class="section-head">
-          <div>
-            <div class="kicker">Hands-on</div>
-            <h2 id="roadmap-title">실습은 작게 시작합니다</h2>
-            <p class="section-desc">처음부터 모든 권한을 열지 않습니다. 테스트 폴더에서 작은 작업만 해보고, 결과를 확인한 뒤 범위를 넓힙니다.</p>
-          </div>
-        </div>
-        <div class="plain-panel">
-          <ul class="plain-list">
-            <li><b>1. 준비</b> 노트북, 인터넷, 계정, 터미널, 테스트 폴더를 확인합니다.</li>
-            <li><b>2. 연결</b> OpenAI, Claude, Gemini, OpenRouter 중 하나를 모델로 연결합니다.</li>
-            <li><b>3. 첫 미션</b> 중요한 파일이 없는 테스트 폴더에서 읽기 작업부터 실행합니다.</li>
-            <li><b>4. 확인</b> 결과가 맞는지 사람이 보고, 괜찮을 때만 권한을 넓힙니다.</li>
-          </ul>
+      <section id="openclaw" class="news-card">
+        <div class="card-inner">
+          <span class="eyebrow">Card News 03</span>
+          <h2>OpenClaw는<br>AI 에이전트를 쉽게 쓰게 하는 플랫폼입니다</h2>
+          <p class="lead">도구와 데이터를 연결하고, 누구나 에이전트를 만들어 사용할 수 있게 돕는 오픈형 구조로 이해하면 됩니다.</p>
+          <figure class="image-card">
+            <img src="assets/hermes-openclaw-overview.jpg" alt="헤르메스 오픈클로 설명 인포그래픽">
+            <figcaption class="image-caption">웹사이트, 문서, 데이터베이스, 이메일, 업무 도구, 외부 API를 연결해 실제 업무 자동화로 확장합니다.</figcaption>
+          </figure>
         </div>
       </section>
 
-      <section id="tools" class="section" aria-labelledby="tools-title">
-        <div class="section-head">
+      <section id="steps" class="news-card">
+        <div class="card-inner split">
           <div>
-            <div class="kicker">Agent Examples</div>
-            <h2 id="tools-title">Hermes와 OpenClaw는 어디에 놓일까?</h2>
-            <p class="section-desc">제품 이름보다 구조가 중요합니다. 둘 다 “AI 모델을 실제 작업 도구와 연결해 일하게 하는 에이전트 층”으로 설명합니다.</p>
+            <span class="eyebrow">Card News 04</span>
+            <h2>설치는 크게 열지 말고<br>작게 시작합니다</h2>
+            <p class="lead">처음부터 모든 권한을 주면 위험합니다. 테스트 폴더와 작은 미션으로 확인한 뒤 범위를 넓힙니다.</p>
           </div>
-        </div>
-        <div class="plain-panel">
-          <p><b>Hermes Agent</b>는 메시지, 기억, 스킬, 도구 호출을 묶어 실제 업무를 처리하는 에이전트입니다.</p>
-          <p><b>OpenClaw</b>는 여러 사람이 쉽게 만들고 쓸 수 있게 정리한 오픈형 에이전트 플랫폼으로 설명하면 됩니다.</p>
-          <p>비전공자에게는 “AI가 텔레그램, 파일, 웹, API와 연결되어 대신 일하는 구조”라고 말하는 것이 가장 쉽습니다.</p>
+          <ol class="steps">
+            <li><span class="num">1</span><span><b>준비</b> 계정, 터미널, 테스트 폴더, 인터넷 연결을 확인합니다.</span></li>
+            <li><span class="num">2</span><span><b>모델 연결</b> OpenAI, Claude, Gemini, OpenRouter 중 하나를 연결합니다.</span></li>
+            <li><span class="num">3</span><span><b>도구 연결</b> Telegram, GitHub, 파일, 웹 검색처럼 필요한 도구만 붙입니다.</span></li>
+            <li><span class="num">4</span><span><b>확인</b> 결과가 맞는지 사람이 보고, 괜찮을 때만 권한을 넓힙니다.</span></li>
+          </ol>
         </div>
       </section>
 
-      <section id="terms" class="section" aria-labelledby="terms-title">
-        <div class="section-head">
-          <div>
-            <div class="kicker">Glossary</div>
-            <h2 id="terms-title">용어를 업무 언어로 바꾸기</h2>
-            <p class="section-desc">설치와 실제 사용 중 자주 만나는 말입니다. 뜻보다 “어디서 쓰이고 무엇을 조심해야 하는지”부터 잡습니다.</p>
+      <section id="terms" class="news-card compact">
+        <div class="card-inner">
+          <span class="eyebrow">Card News 05</span>
+          <h2>설치 중 자주 만나는 용어</h2>
+          <p class="lead">처음에는 뜻보다 “어디에 쓰이고 무엇을 조심해야 하는지”가 더 중요합니다.</p>
+          <div class="term-grid">
+            <div class="term"><b>LLM / 모델</b><span>AI의 두뇌입니다. GPT, Claude, Gemini처럼 제품명이 붙습니다.</span></div>
+            <div class="term"><b>API</b><span>서비스끼리 대화하는 공식 통로입니다. 연결 주소와 사용 규칙이 있습니다.</span></div>
+            <div class="term"><b>API 키</b><span>내 계정으로 서비스를 쓰게 하는 비밀번호 같은 값입니다. 공개하면 안 됩니다.</span></div>
+            <div class="term"><b>토큰</b><span>로그인 권한을 증명하는 임시 출입증입니다. Bot Token, Access Token이 대표적입니다.</span></div>
+            <div class="term"><b>OAuth 인증</b><span>비밀번호 대신 “이 앱에 이 권한만 허용”하는 로그인 방식입니다.</span></div>
+            <div class="term"><b>Tool / MCP</b><span>AI가 파일, 브라우저, GitHub, DB 같은 외부 기능을 호출하는 방식입니다.</span></div>
+            <div class="term"><b>Gateway</b><span>메시지를 어느 에이전트에게 보낼지 정하는 중간 관문입니다.</span></div>
+            <div class="term"><b>Webhook</b><span>이벤트가 생기면 정해진 주소로 자동 알림을 보내는 방식입니다.</span></div>
+            <div class="term"><b>Docker</b><span>프로그램을 독립된 상자에서 실행해 설치 충돌과 실수 피해를 줄입니다.</span></div>
+            <div class="term"><b>.env / 환경변수</b><span>API 키, 토큰, 서버 주소를 코드 밖에 따로 보관하는 설정입니다.</span></div>
+            <div class="term"><b>로그</b><span>프로그램이 남기는 작업 기록입니다. 안 될 때 원인을 찾는 첫 단서입니다.</span></div>
+            <div class="term"><b>배포</b><span>내 컴퓨터 파일을 NAS, GitHub Pages, Cloudflare 주소에서 보이게 올리는 일입니다.</span></div>
           </div>
         </div>
-        <ul class="plain-list" id="termGrid">
-          <li data-term="ai llm 모델 두뇌 model"><b>LLM</b> 글을 읽고 답하는 AI 두뇌입니다. GPT, Claude, Gemini 같은 모델이 여기에 들어갑니다.</li>
-          <li data-term="model 모델 gpt claude gemini"><b>모델</b> AI 두뇌의 제품명입니다. 작업 성격에 따라 빠른 모델, 똑똑한 모델, 저렴한 모델을 고릅니다.</li>
-          <li data-term="prompt 프롬프트 지시 instruction"><b>프롬프트</b> AI에게 주는 업무지시서입니다. 목표, 조건, 금지사항, 결과 형식을 같이 적으면 좋습니다.</li>
-          <li data-term="agent 에이전트 작업자 자동화"><b>에이전트</b> 목표를 받고 계획을 세운 뒤 도구를 써서 일을 처리하는 AI 작업자입니다.</li>
-          <li data-term="api application programming interface 연결 통로"><b>API</b> 서비스끼리 대화하는 공식 통로입니다. 에이전트가 OpenAI, Telegram, GitHub 같은 서비스와 연결될 때 씁니다.</li>
-          <li data-term="api key 키 보안 secret"><b>API 키</b> 내 계정으로 서비스를 쓰게 해주는 비밀번호 같은 값입니다. 공개 저장소, 화면 공유, 단체방에 올리면 안 됩니다.</li>
-          <li data-term="token 토큰 bot token access token refresh token"><b>토큰</b> 로그인 권한을 증명하는 임시 출입증입니다. Telegram Bot Token, Access Token, Refresh Token처럼 이름이 붙습니다.</li>
-          <li data-term="oauth 인증 로그인 권한 authorize callback"><b>OAuth 인증</b> 비밀번호를 직접 주지 않고 “이 앱에 이 권한만 허용”하는 로그인 방식입니다. Cloudflare, Google, GitHub 연동에서 자주 봅니다.</li>
-          <li data-term="permission 권한 scope read write admin"><b>권한 / Scope</b> 앱이 할 수 있는 일의 범위입니다. 읽기, 쓰기, 관리자 권한을 구분해서 최소한만 열어야 합니다.</li>
-          <li data-term="tool mcp 도구 호출 function"><b>Tool / MCP</b> AI가 파일, 브라우저, GitHub, DB 같은 외부 기능을 호출하는 방식입니다. 에이전트의 손발에 해당합니다.</li>
-          <li data-term="telegram bot bot token mention dm"><b>Telegram Bot</b> 텔레그램 메시지를 받아 에이전트로 전달하는 입구입니다. Bot Token을 연결해야 동작합니다.</li>
-          <li data-term="gateway 라우팅 route session 권한"><b>Gateway</b> 들어온 메시지를 어느 에이전트에게 보낼지 정하는 중간 관문입니다. 세션, 권한, 라우팅을 관리합니다.</li>
-          <li data-term="webhook callback url event"><b>Webhook</b> 어떤 일이 생기면 정해진 주소로 자동 알림을 보내는 방식입니다. 메신저나 결제, GitHub 알림 연동에서 자주 나옵니다.</li>
-          <li data-term="endpoint url 주소 api server"><b>Endpoint</b> API가 기다리는 정확한 주소입니다. 예를 들어 로그인 콜백 주소나 메시지 수신 주소가 여기에 해당합니다.</li>
-          <li data-term="docker sandbox container 컨테이너 권한"><b>Docker / 컨테이너</b> 프로그램을 독립된 상자 안에서 실행하는 방식입니다. 설치 충돌과 실수 피해를 줄입니다.</li>
-          <li data-term="env environment variable 환경변수 secret"><b>환경변수 / .env</b> API 키, 토큰, 서버 주소처럼 코드에 직접 쓰면 위험한 값을 따로 보관하는 설정 파일입니다.</li>
-          <li data-term="cli terminal command 터미널 명령어"><b>CLI / 터미널</b> 버튼 대신 글자로 명령을 입력하는 도구입니다. 설치, 실행, 로그 확인에 자주 씁니다.</li>
-          <li data-term="log 로그 error debug"><b>로그</b> 프로그램이 남기는 작업 기록입니다. 안 될 때 원인을 찾는 첫 번째 단서입니다.</li>
-          <li data-term="session 세션 대화 연결 상태"><b>세션</b> 한 번 이어진 대화나 작업의 상태입니다. 같은 사용자인지, 이전 대화를 기억할지 판단할 때 씁니다.</li>
-          <li data-term="memory 메모리 기억 persona"><b>메모리</b> 에이전트가 이전 대화, 사용자 취향, 작업 규칙을 기억하는 공간입니다. 잘못된 기억이 쌓이면 답도 흔들릴 수 있습니다.</li>
-          <li data-term="skill 스킬 기능 workflow"><b>스킬</b> 에이전트에게 추가하는 작업 능력입니다. 예를 들어 GitHub 배포, 이미지 생성, 문서 정리 같은 기능입니다.</li>
-          <li data-term="rate limit quota 사용량 제한"><b>Rate Limit / 사용량 제한</b> 너무 많이 호출하면 잠시 막히는 제한입니다. 무료 계정이나 API 테스트에서 자주 만납니다.</li>
-          <li data-term="repository repo github 저장소 public private"><b>Repository / Repo</b> GitHub에서 코드와 파일을 보관하는 저장소입니다. Public이면 누구나 볼 수 있습니다.</li>
-          <li data-term="deploy 배포 nas github pages cloudflare"><b>배포</b> 내 컴퓨터의 파일을 NAS, GitHub Pages, Cloudflare 같은 외부 주소에서 볼 수 있게 올리는 작업입니다.</li>
-        </ul>
       </section>
 
-      <section id="safety" class="section" aria-labelledby="safety-title">
-        <div class="section-head">
+      <section id="safety" class="news-card">
+        <div class="card-inner split">
           <div>
-            <div class="kicker">Safety</div>
-            <h2 id="safety-title">처음 설치할 때 안전 체크리스트</h2>
-            <p class="section-desc">에이전트는 편리하지만 권한이 커질수록 위험도 커집니다. 처음에는 작게 열고 확인합니다.</p>
+            <span class="eyebrow">Card News 06</span>
+            <h2>에이전트는 편리하지만<br>권한이 커질수록 위험합니다</h2>
+            <p class="lead">처음 설치할 때는 “최소 권한, 테스트 폴더, 사람 확인” 세 가지만 기억하면 됩니다.</p>
+          </div>
+          <div class="notice">
+            <b>처음 실습에서 피할 것</b>
+            <p>삭제, 결제, 메일 발송, 계정 설정 변경, 전체 디스크 접근은 제외합니다.</p>
+            <b>처음 실습에서 할 것</b>
+            <p>테스트 폴더 읽기, 간단한 요약, 웹 검색, 결과 확인처럼 되돌릴 수 있는 작업부터 시작합니다.</p>
+            <b>절대 공개하지 않을 것</b>
+            <p>API 키, Bot Token, OAuth 토큰, `.env` 파일은 화면 공유와 공개 저장소에 올리지 않습니다.</p>
           </div>
         </div>
-        <ul class="plain-list">
-          <li><b>API 키</b> 비밀번호처럼 관리합니다. 화면 공유나 단체방에 노출하지 않습니다.</li>
-          <li><b>테스트 폴더</b> 처음에는 중요한 문서가 없는 폴더만 읽고 쓰게 합니다.</li>
-          <li><b>위험 행동 금지</b> 삭제, 결제, 메일 발송, 계정 설정 변경은 첫 실습에서 제외합니다.</li>
-        </ul>
       </section>
-    </main>
 
-  </div>
+      <section class="news-card closing">
+        <div class="card-inner">
+          <span class="eyebrow">Card News 07</span>
+          <h2>핵심은 하나입니다</h2>
+          <p class="lead">AI 에이전트는 “AI 두뇌가 도구를 연결해 일을 처리하는 구조”입니다. 제품 이름보다 흐름을 먼저 이해하면 설치와 운영이 쉬워집니다.</p>
+          <div class="pill-row">
+            <span class="pill">작게 시작</span>
+            <span class="pill">사람이 확인</span>
+            <span class="pill">권한은 최소화</span>
+            <span class="pill">토큰은 비공개</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 
-  <nav class="bottom-nav no-print" aria-label="하단 메뉴">
-    <a href="#top">홈</a>
-    <a href="#flow">흐름</a>
-    <a href="#openclaw">오픈클로</a>
+  <nav class="bottom-nav" aria-label="하단 카드뉴스 메뉴">
+    <a href="#cover">처음</a>
+    <a href="#telegram">연결</a>
+    <a href="#terms">용어</a>
     <a href="#safety">안전</a>
   </nav>
-
-  <script>
-    (function () {
-      document.documentElement.classList.add('ready');
-    })();
-  </script>
 </body>
 </html>
