@@ -33,7 +33,7 @@ else
   SSH_BASE=(ssh -p "$NAS_PORT")
 fi
 
-COPYFILE_DISABLE=1 tar --disable-copyfile --format ustar -czf - index.html agent_study_webpage_white.html README.md .nojekyll \
+COPYFILE_DISABLE=1 tar --disable-copyfile --format ustar -czf - index.html agent_study_webpage_white.html README.md .nojekyll assets \
   | "${SSH_BASE[@]}" "${NAS_USER}@${NAS_HOST}" "set -e; mkdir -p '$NAS_WEB_PATH'; tar -xzf - -C '$NAS_WEB_PATH'; cp '$NAS_WEB_PATH/index.html' /volume1/web/agent.html; rm -f '$NAS_WEB_PATH'/._*"
 
 echo "Checking NAS LAN URL..."
